@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1 class="display-4">Benvenuto in Pong Game!</h1>
+    <p class="lead">Un semplice gioco Pong realizzato con Django e Bootstrap.</p>
+    <hr class="my-4">
+    <p>Pronto a giocare?</p>
+    {% if request.user.is_authenticated %}
+      <p>Bentornato {{user.username}}</p>
+      <a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
+    {% else %}
+      <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Login</a>
+      <a class="btn btn-primary btn-lg" href="{% url 'signup' %}" role="button">Sign Up</a>
+    {% endif %}
+  </div>
+{% endblock %}
