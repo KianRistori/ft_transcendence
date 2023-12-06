@@ -1,7 +1,11 @@
 // Pong game logic
 const canvas = document.getElementById("pongCanvas");
 const context = canvas.getContext("2d");
-
+const btnStart = document.getElementById("btnStart");
+const btnsStatus = document.getElementById("btnsStatus");
+const btnStatusPlay = document.getElementById("btnStatusPlay");
+const btnStatusPause = document.getElementById("btnStatusPause");
+const btnStatusRewind = document.getElementById("btnStatusRewind");
 
 const paddleWidth = 10;
 const paddleHeight = 80;
@@ -24,7 +28,7 @@ let isPaused = false;
 function draw() {
   // Clear the canvas
   context.clearRect(0, 0, canvas.width, canvas.height);
-  context.strokeStyle = "#EAFF00";
+  context.strokeStyle = "#41464b";
   context.lineWidth = 2;
   context.strokeRect(0, 0, canvas.width, canvas.height);
 
@@ -115,21 +119,70 @@ const keysPressed = {};
 window.addEventListener("keydown", function (event) {
   keysPressed[event.code] = true;
 
-  // Pause the game on Space key press
-  if (event.code === "Space") {
-    isPaused = !isPaused;
-  }
+  // // Pause the game on Space key press
+  // if (event.code === "Space") {
+  //   isPaused = !isPaused;
+  //   if (isPaused) {
+  //     btnStatusPause.classList.remove("btn", "btn-outline-secondary");
+  //     btnStatusPause.classList.add("btn", "btn-secondary");
+  //   }
+  //   else if (!isPaused) {
+  //     btnStatusPause.classList.remove("btn", "btn-secondary");
+  //     btnStatusPause.classList.add("btn", "btn-outline-secondary");
+  //   }
+  // }
 });
 
 window.addEventListener("keyup", function (event) {
   keysPressed[event.code] = false;
 });
 
+btnStatusPause.addEventListener("click", function () {
+  isPaused = true;
+
+  btnStatusPause.classList.toggle("btn-outline-secondary");
+  btnStatusPause.classList.toggle("btn-secondary");
+  btnStatusPlay.classList.toggle("btn-secondary");
+  btnStatusPlay.classList.toggle("btn-outline-secondary");
+});
+
+btnStatusPlay.addEventListener("click", function () {
+  isPaused = false;
+
+  btnStatusPause.classList.toggle("btn-outline-secondary");
+  btnStatusPause.classList.toggle("btn-secondary");
+  btnStatusPlay.classList.toggle("btn-secondary");
+  btnStatusPlay.classList.toggle("btn-outline-secondary");
+});
+
 // Game loop
 function gameLoop() {
+  btnStart.remove();
+  canvas.style.display = 'block';
+  btnsStatus.style.display = 'block';
   draw();
   requestAnimationFrame(gameLoop);
 }
 
-// Start the game loop
-gameLoop();
+btnStart.addEventListener("click", function () {
+  gameLoop();
+  btnStatusPlay.classList.remove("btn", "btn-outline-secondary");
+  btnStatusPlay.classList.add("btn", "btn-secondary");
+});
+
+btnStatusRewind.addEventListener("click", function () {
+  resetGame();
+});
+
+function resetGame() {
+  // Reimposta tutte le variabili del gioco al loro stato iniziale
+  paddle1Y = canvas.height / 2 - paddleHeight / 2;
+  paddle2Y = canvas.height / 2 - paddleHeight / 2;
+
+  resetBall();
+
+  scorePlayer1 = 0;
+  scorePlayer2 = 0;
+
+  isPaused = false;
+}
