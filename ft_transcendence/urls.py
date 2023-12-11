@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("core.urls")),
     path('local/', include("offline.urls")),
-    path('multiplayer/', include("multiplayer.urls"))
+    path('online/', include("online.urls"))
 ]

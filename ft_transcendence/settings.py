@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'offline',
-    'multiplayer',
+    'online',
 ]
 
 MIDDLEWARE = [
