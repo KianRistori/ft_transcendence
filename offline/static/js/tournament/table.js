@@ -35,7 +35,7 @@ function displayTournamentBracket() {
   
   if (players.length === 1) {
     alert(`${players[0]} win the Tournament!`);
-    history.go(-1);
+    window.location.href = '/local/tournament';
   }
 
   tournamentBracket.innerHTML = ''; // Pulisci il contenuto precedente

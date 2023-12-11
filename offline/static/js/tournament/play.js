@@ -207,7 +207,7 @@ function endGame(winner, loser) {
   removePlayerFromArray(players, loser);
   matchups.shift();
   alert(`${winner} wins! Game over.`);
-  window.location.replace("multiplayer/table/");
+  window.location.href = '/local/tournament/table';
   localStorage.setItem('players', JSON.stringify(players));
   localStorage.setItem('matchups', JSON.stringify(matchups));
 }
