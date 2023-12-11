@@ -12,3 +12,9 @@ def homeAI(request):
 
 def homeTournament(request):
     return render(request, 'tournament/home.html')
+
+def tournamentTable(request):
+    return render(request, 'tournament/table.html')
+
+def tournamentPlay(request):
+    return render(request, 'tournament/play.html')
