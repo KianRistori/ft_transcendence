@@ -11,25 +11,37 @@
   <div class="container mt-3">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid gap-5">
-        <a class="navbar-brand" href="#">Pong</a>
+        <a class="navbar-brand" href="/">Pong</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link" href="/local/">Local</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" href="/online/">Multiplayer</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/friends/">Friends</a>
             </li>
           </ul>
+          
           <div class="d-flex gap-2">
             {% if request.user.is_authenticated %}
-              <h6>Bentornato {{user.username}}</h6>
-              <a class="btn btn-outline-success" href="{% url 'logout' %}" role="button">Logout</a>
+              <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="{{user_profile.profileImg.url}}" width="50" height="50" class="rounded-circle object-fit-cover" alt="Profile Picture">
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg-end">
+                  <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="btn btn-outline-success dropdown-item" href="{% url 'logout' %}" role="button">Logout</a></li>
+                </ul>
+              </div>
             {% else %}
-              <a class="btn btn-outline-success mr-2" href="{% url 'login' %}" role="button">Sign In</a>
+              <a class="btn btn-outline-success mr-2" href="{% url 'signin' %}" role="button">Sign In</a>
               <a class="btn btn-outline-secondary" href="{% url 'signup' %}" role="button">Sign Up</a>
             {% endif %}
           </div>

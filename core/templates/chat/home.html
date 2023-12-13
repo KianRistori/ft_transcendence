@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="mb-4">Chat con {{ profile.user.username }}</h2>
+    
+    <div class="messages">
+      {% for message in messages %}
+        <div class="{% if message.sender == user %}sent{% else %}received{% endif %} mb-2">
+          <p class="mb-1">{{ message.content }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <form method="post" action="{% url 'send_message' username=profile.user.username %}" class="mt-3">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Invia</button>
+    </form>
+  </div>
+
+{% endblock %}
