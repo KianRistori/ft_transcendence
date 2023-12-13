@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+</head>
+<div class="container text-center">
+  <h1 class="mt-4 mb-5">gay VS gay</h1>
+  
+  <form id="form">
+    <input type="text" name="message"/>
+</form>
+
+<div id="messages"></div>
+  <div class="alert alert-secondary mb-3" role="alert">
+    Player 1 Moves with W and S, Player 2 moves with Up Arrow and Down Arrow. <br>
+    When you are ready press the Start Button
+  </div>
+  <button id="btnStart" type="button" class="btn btn-primary">Start Game</button>
+  <canvas id="pongCanvas" width="1200" height="500" class="mx-auto" style="display: none;"></canvas>
+  <div id="btnsStatus" class="btn-group mt-3" role="group" style="display: none;">
+    <button id="btnStatusPlay" type="button" class="btn btn-outline-secondary"><i class="bi bi-play-fill"></i></button>
+    <button id="btnStatusPause" type="button" class="btn btn-outline-secondary"><i class="bi bi-pause-fill"></i></button>
+    <button id="btnStatusRewind" type="button" class="btn btn-outline-secondary"><i class="bi bi-rewind-fill"></i></button>
+  </div>
+</div>
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}
