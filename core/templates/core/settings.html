@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+  <div class="container mt-5">
+    <h1 class="mb-4">Settings</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          <p class="form-label">Profile Image</p>
+          <img src="{{user_profile.profileImg.url}}" class="rounded-circle" width="100" alt="Profile Picture">
+          <input type="file" name="image" class="form-control mt-4">
+        </div>
+        <div class="mb-3">
+          <label for="about" class="form-label">Bio</label>
+          <textarea type="text" class="form-control" id="about" name="bio" rows="4" cols="50">{{user_profile.bio}}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+{% endblock %}
