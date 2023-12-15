@@ -1,11 +1,63 @@
-let url = `ws://${window.location.host}/ws/socket-server/`
+let wsURL = `ws://${window.location.host}/ws/socket-server/`;
+let chatSocket;
 
-const chatSocket = new WebSocket(url)
-let x = 0;
+// Function to initiate WebSocket connection
+function initWebSocket() {
+  chatSocket = new WebSocket(wsURL);
 
-chatSocket.onmessage = function(e){
-  let data = JSON.parse(e.data)
-  console.log('Data:', data)
+  chatSocket.onopen = function(event) {
+    console.log('WebSocket is open and ready.');
+    
+    // Optionally, you can set up additional logic here after the WebSocket connection is established.
+  };
+
+  chatSocket.onmessage = function(e) {
+    let data = JSON.parse(e.data)
+    console.log('Data:', data)
+    if (data.type === 'invitation_received') {
+      console.log(`Received an invitation from ${data.sender}. Do you accept?`);
+      // Notify the user about the invitation
+      // You may choose to display this in your UI or handle it as per your application logic
+    } else if (data.type === 'opponent_joined_group') {
+      console.log(`${data.user} has joined the group.`);
+      // Process the information when the opponent joins the group
+    } else {
+      console.log("else");
+      // Handle other message types if needed
+    }
+  };
+
+  chatSocket.onclose = function(event) {
+    console.log('WebSocket connection closed.');
+    // Optionally, you can set up logic for handling closed connections here.
+  };
+
+  chatSocket.onerror = function(error) {
+    console.error('WebSocket error:', error);
+  };
+}
+
+// Call the function to initiate the WebSocket connection
+initWebSocket();
+if (typeof userData !== 'undefined') {
+  console.log('Logged in user:', userData.username);
+  
+  // You can use other properties of userData as needed
+} else {
+  console.log('User is not logged in.');
+}
+
+function inviteFriend(friend_name) {
+  let message = 'Invitation message';
+  if (chatSocket.readyState === WebSocket.OPEN) {
+    chatSocket.send(JSON.stringify({
+      'type': 'invitation',
+      'sender': userData.username,
+      'opponent': friend_name
+    }));
+  } else {
+    console.error('WebSocket is not ready.');
+  }
 }
 /*
 let form = document.getElementById('form')
@@ -100,7 +152,8 @@ function draw() {
     // Move the paddles
     movePaddles();
     chatSocket.send(JSON.stringify({
-      'message':paddle1Y
+      'message':paddle1Y,
+      'user':userData.username
     }))
   }
 
