@@ -1,0 +1,174 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-16 11:30+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\core\templates\auth\signin.html:7 .\core\templates\auth\signin.html:23
+#: .\core\templates\core\base.html:60
+msgid "Sign In"
+msgstr "Accedi"
+
+#: .\core\templates\auth\signup.html:7 .\core\templates\auth\signup.html:29
+#: .\core\templates\core\base.html:61
+msgid "Sign Up"
+msgstr "Registrati"
+
+#: .\core\templates\core\base.html:22 .\core\templates\core\home.html:16
+msgid "Offline"
+msgstr ""
+
+#: .\core\templates\core\base.html:25 .\core\templates\core\home.html:19
+msgid "Online"
+msgstr ""
+
+#: .\core\templates\core\base.html:28
+msgid "Friends"
+msgstr "Amici"
+
+#: .\core\templates\core\base.html:54 .\core\templates\core\settings.html:9
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: .\core\templates\core\base.html:56
+msgid "Logout"
+msgstr "Esci"
+
+#: .\core\templates\core\home.html:9
+msgid "Welcome in Pong Game!"
+msgstr "Benventuo in Pong Game!"
+
+#: .\core\templates\core\home.html:10
+msgid "A simple Pong game made with Django and Bootstrap."
+msgstr "Un semplice Pong game fatto con Django e Bootstrap."
+
+#: .\core\templates\core\home.html:12
+msgid "Ready to Play?"
+msgstr "Pronto a Giocare?"
+
+#: .\core\templates\core\settings.html:13
+msgid "Profile Image"
+msgstr "Immagine di Profilo"
+
+#: .\core\templates\core\settings.html:18
+msgid "Bio"
+msgstr ""
+
+#: .\core\templates\core\settings.html:21
+msgid "Submit"
+msgstr "Invia"
+
+#: .\core\templates\friends\home.html:6
+msgid "Friends and friendship request"
+msgstr "Amici e richieste di amicizia"
+
+#: .\core\templates\friends\home.html:7
+msgid "Search Friends"
+msgstr "Ricerca Amici"
+
+#: .\core\templates\friends\home.html:10
+msgid "Friends:"
+msgstr "Amici:"
+
+#: .\core\templates\friends\home.html:22
+msgid "Remove Friend"
+msgstr "Rimuovi Amico"
+
+#: .\core\templates\friends\home.html:28
+msgid "No Friends at the moment"
+msgstr "Nessun amico al momento"
+
+#: .\core\templates\friends\home.html:32
+msgid "Friend requests recived"
+msgstr "Richieste di amicizia ricevute"
+
+#: .\core\templates\friends\home.html:40
+msgid "Accept"
+msgstr "Accetta"
+
+#: .\core\templates\friends\home.html:41
+msgid "Refuse"
+msgstr "Rifiuta"
+
+#: .\core\templates\friends\home.html:47
+msgid "No friend request at the moment"
+msgstr "Nessuna richiesta di amicizia al momento"
+
+#: .\core\templates\friends\search.html:5
+msgid "User Search and Sending Friend Request"
+msgstr "Cerca un utente e manda la richiesta di amicizia"
+
+#: .\core\templates\friends\search.html:10
+msgid "Search"
+msgstr "Cerca"
+
+#: .\core\templates\friends\search.html:16
+msgid "Result of the reserch"
+msgstr "Risultato della ricerca"
+
+#: .\core\templates\friends\search.html:24
+msgid "Send Request"
+msgstr "Invia richiesta"
+
+#: .\ft_transcendence\settings.py:147
+msgid "English"
+msgstr "Inglese"
+
+#: .\ft_transcendence\settings.py:148
+msgid "Italian"
+msgstr "Italiano"
+
+#: .\ft_transcendence\settings.py:149
+msgid "French"
+msgstr "Francese"
+
+#: .\offline\templates\1vs1\home.html:11 .\offline\templates\ai\home.html:11
+#: .\offline\templates\tournament\play.html:11
+msgid ""
+"Player 1 Moves with Arrow Up and Arrow Down, Player 2 moves with W and S"
+msgstr ""
+"Giocatore 1 si muove con Freccia in Alto e Freccia in Basso, Giocare 2 si "
+"muove con W e S"
+
+#: .\offline\templates\1vs1\home.html:12 .\offline\templates\ai\home.html:12
+#: .\offline\templates\tournament\play.html:12
+msgid "Start Game"
+msgstr "Iniza la partita"
+
+#: .\offline\templates\home.html:18 .\offline\templates\tournament\home.html:9
+msgid "Tournament"
+msgstr "Torneo"
+
+#: .\offline\templates\tournament\home.html:10
+msgid "Select the number of players"
+msgstr "Seleziona il numero dei giocatori"
+
+#: .\offline\templates\tournament\home.html:15
+msgid "Select the win point"
+msgstr "Seleziona il punteggio da raggiungere"
+
+#: .\offline\templates\tournament\home.html:28
+msgid "Player Name"
+msgstr "Nome Giocatore"
+
+#: .\offline\templates\tournament\home.html:33
+msgid "Start Tournament"
+msgstr "Inzia il Torneo"
+
+#: .\offline\templates\tournament\table.html:10
+msgid "Start Match"
+msgstr "Iniza la partita"

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+  {% load i18n %}
 <html lang="en" data-bs-theme="dark">
 <head>
   <title>{% block title %}Pong Game{% endblock %}</title>
@@ -18,39 +19,54 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="/local/">Local</a>
+              <a class="nav-link" href="/local/">{% trans 'Offline' %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/online/">Multiplayer</a>
+              <a class="nav-link" href="/online/">{% trans 'Online' %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/friends/">Friends</a>
+              <a class="nav-link" href="/friends/">{% trans 'Friends' %}</a>
             </li>
           </ul>
-          
-          <div class="d-flex gap-2">
+          <div class="d-flex gap-2 align-items-center">
+            <div class="">
+              <form action="{% url 'set_language' %}" method="POST" class="form-inline">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.path }}">
+                <select name="language" onchange="this.form.submit()" class="form-control">
+                  {% get_current_language as LANGUAGE_CODE %}
+                  {% get_available_languages as LANGUAGES %}
+                  {% get_language_info_list for LANGUAGES as languages %}
+                  {% for language in languages %}
+                    <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                      {{ language.name_local }} ({{ language.code }})
+                    </option>
+                  {% endfor %}
+                </select>
+              </form>
+            </div>
             {% if request.user.is_authenticated %}
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="{{user_profile.profileImg.url}}" width="50" height="50" class="rounded-circle object-fit-cover" alt="Profile Picture">
                 </button>
                 <ul class="dropdown-menu dropdown-menu-lg-end">
-                  <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
+                  <li><a class="dropdown-item" href="{% url 'settings' %}">{% trans 'Settings' %}</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="btn btn-outline-success dropdown-item" href="{% url 'logout' %}" role="button">Logout</a></li>
+                  <li><a class="btn btn-outline-success dropdown-item" href="{% url 'logout' %}" role="button">{% trans 'Logout' %}</a></li>
                 </ul>
               </div>
             {% else %}
-              <a class="btn btn-outline-success mr-2" href="{% url 'signin' %}" role="button">Sign In</a>
-              <a class="btn btn-outline-secondary" href="{% url 'signup' %}" role="button">Sign Up</a>
+              <a class="btn btn-outline-success mr-2" href="{% url 'signin' %}" role="button">{% trans 'Sign In' %}</a>
+              <a class="btn btn-outline-secondary" href="{% url 'signup' %}" role="button">{% trans 'Sign Up' %}</a>
             {% endif %}
           </div>
         </div>
       </div>
     </nav>
     {% block content %}
+    
     {% endblock %}
   </div>
-
 </body>
 </html>

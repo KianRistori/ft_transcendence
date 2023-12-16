@@ -1,21 +1,22 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <head>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
   <div class="container mt-5">
-    <h1 class="display-4">Benvenuto in Pong Game!</h1>
-    <p class="lead">Un semplice gioco Pong realizzato con Django e Bootstrap.</p>
+    <h1 class="display-4">{% trans 'Welcome in Pong Game!' %}</h1>
+    <p class="lead">{% trans 'A simple Pong game made with Django and Bootstrap.' %}</p>
     <hr class="my-4">
-    <p>Pronto a giocare?</p>
+    <p>{% trans 'Ready to Play?' %}</p>
     <div class="container">
       <div class="row align-items-center">
         <div class="col-sm">
-          <a href="/local" class="btn btn-outline-success mr-2 d-flex align-items-center justify-content-center" style="font-size: 50px; height: 400px;" role="button">Local</a>
+          <a href="/local" class="btn btn-outline-success mr-2 d-flex align-items-center justify-content-center" style="font-size: 50px; height: 400px;" role="button">{% trans 'Offline' %}</a>
         </div>
         <div class="col-sm">
-          <a href="/online" class="btn btn-outline-success mr-2 d-flex align-items-center justify-content-center" style="font-size: 50px; height: 400px;" role="button">Multiplayer</a>
+          <a href="/online" class="btn btn-outline-success mr-2 d-flex align-items-center justify-content-center" style="font-size: 50px; height: 400px;" role="button">{% trans 'Online' %}</a>
         </div>
       </div>
     </div>

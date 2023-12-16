@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <head>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -7,11 +8,8 @@
 </head>
 <div class="container text-center">
   <h1 id="textVS" class="mt-4 mb-5">1 VS 1</h1>
-  <div class="alert alert-secondary mb-3" role="alert">
-    Player 1 Moves with W and S, Player 2 moves with Up Arrow and Down Arrow. <br>
-    When you are ready press the Start Button
-  </div>
-  <button id="btnStart" type="button" class="btn btn-primary">Start Game</button>
+  <div class="alert alert-secondary mb-3" role="alert">{% trans 'Player 1 Moves with Arrow Up and Arrow Down, Player 2 moves with W and S' %}</div>
+  <button id="btnStart" type="button" class="btn btn-primary">{% trans 'Start Game' %}</button>
   <canvas id="pongCanvas" width="1200" height="500" class="mx-auto" style="display: none;"></canvas>
   <div id="btnsStatus" class="btn-group mt-3" role="group" style="display: none;">
     <button id="btnStatusPlay" type="button" class="btn btn-outline-secondary"><i class="bi bi-play-fill"></i></button>

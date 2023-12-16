@@ -1,17 +1,18 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <head>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 </head>
 <div class="container text-center">
-  <h1 class="mt-4 mb-5">Tournament</h1>
-  <h3 class="mt-4 mb-3">Select the number of players</h3>
+  <h1 class="mt-4 mb-5">{% trans 'Tournament' %}</h1>
+  <h3 class="mt-4 mb-3">{% trans 'Select the number of players' %}</h3>
   <div id="btnsNumberSelect" class="btn-group" role="group" aria-label="First group">
     <button type="button" class="btn btn-outline-secondary btn-lg" data-players="4">4</button>
     <button type="button" class="btn btn-outline-secondary btn-lg" data-players="8">8</button>
   </div>
-  <h3 class="mt-5 mb-3">Select the win point</h3>
+  <h3 class="mt-5 mb-3">{% trans 'Select the win point' %}</h3>
   <div id="btnsWinPoint" class="btn-group" role="group" aria-label="First group">
     <button type="button" class="btn btn-outline-secondary btn-lg" data-btn="1">1</button>
     <button type="button" class="btn btn-outline-secondary btn-lg" data-btn="2">2</button>
@@ -24,12 +25,12 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Player Name</th>
+        <th scope="col">{% trans 'Player Name' %}</th>
       </tr>
     </thead>
     <tbody id="playerNamesTableBody"></tbody>
   </table>
-  <button id="btnStartTournament" class="btn btn-primary btn-lg mt-3" disabled>Start Tournament</button>
+  <button id="btnStartTournament" class="btn btn-primary btn-lg mt-3" disabled>{% trans 'Start Tournament' %}</button>
 </div>
 <script src="{% static 'js/tournament/app.js' %}"></script>
 {% endblock %}
