@@ -1,78 +1,60 @@
 import json
-from channels.generic.websocket import WebsocketConsumer
-from asgiref.sync import async_to_sync
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
+class PongConsumer(AsyncJsonWebsocketConsumer):
+    async def connect(self):
+        self.room_name = self.scope['url_route']['kwargs']['room_code']
+        self.room_group_name = 'room_%s' % self.room_name
 
-class PongConsumer(WebsocketConsumer):
-    def connect(self):
-        self.accept()
+        # Join room group
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+        await self.accept()
 
-    def disconnect(self, close_code):
-        pass
+    async def disconnect(self, close_code):
+        print("Disconnected")
+        # Leave room group
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
 
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        print(text_data)
-        message_type = text_data_json['type']
+    async def receive(self, text_data):
+        """
+        Receive message from WebSocket.
+        Get the event and send the appropriate event
+        """
+        response = json.loads(text_data)
+        event = response.get("event", None)
+        message = response.get("message", None)
+        if event == 'MOVE':
+            # Send message to room group
+            await self.channel_layer.group_send(self.room_group_name, {
+                'type': 'send_message',
+                'message': message,
+                "event": "MOVE"
+            })
 
-        if message_type == 'invitation':
-            sender = text_data_json['sender']
-            opponent = text_data_json['opponent']
-            print("lello")
-            # Send an invitation message to the opponent
-            # You might include additional data in the invitation message
-            self.send(text_data=json.dumps({
-                'type': 'invitation_received',
-                'message': f'You received an invitation from {sender}. Do you accept?',
-                'sender': sender,
-                'opponent': opponent
-            }))
+        if event == 'START':
+            # Send message to room group
+            await self.channel_layer.group_send(self.room_group_name, {
+                'type': 'send_message',
+                'message': message,
+                'event': "START"
+            })
 
-        elif message_type == 'accept_invitation':
-            # The opponent has accepted the invitation
-            opponent = text_data_json['opponent']
-            channel_name = self.get_or_create_channel_name(self.scope['user'].username, opponent)
-            print(channel_name)
-            # Add both users to the same channel group
-            async_to_sync(self.channel_layer.group_add)(channel_name, self.channel_name)
+        if event == 'END':
+            # Send message to room group
+            await self.channel_layer.group_send(self.room_group_name, {
+                'type': 'send_message',
+                'message': message,
+                'event': "END"
+            })
 
-            # Notify both users that they have joined the same group
-            async_to_sync(self.channel_layer.group_send)(
-                channel_name,
-                {
-                    'type': 'opponent_joined_group',
-                    'message': f'{opponent} has joined the group.',
-                    'user': self.scope['user'].username
-                }
-            )
-
-    def opponent_joined_group(self, event):
-        message = event['message']
-        username = event['user']
-
-        # Send a message to the current user that the opponent has joined the group
-        self.send(text_data=json.dumps({
-            'type': 'opponent_joined_group',
-            'message': message,
-            'user': username
+    async def send_message(self, res):
+        """ Receive message from room group """
+        # Send message to WebSocket
+        await self.send(text_data=json.dumps({
+            "payload": res,
         }))
-
-    def opponent_paddle(self, event):
-        message = event['message']
-        username = event['user']
-
-        self.send(text_data=json.dumps({
-            'type':'opponent_paddle',
-            'message':message,
-            'user':username
-        }))
-
-    def get_or_create_channel_name(self, username, opponent_username):
-        # Generate a unique channel name based on user identifiers
-        # You might use a specific pattern or concatenation to create a unique name
-        # For example:
-        print("gattoide")
-        if (username <= opponent_username):
-            return f"user_channel_{username}_{opponent_username}"
-        else:
-            return f"user_channel_{opponent_username}_{username}"
-            

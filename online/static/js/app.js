@@ -1,84 +1,13 @@
-let wsURL = `ws://${window.location.host}/ws/socket-server/`;
-let chatSocket;
+var roomCode = document.getElementById("game_board").getAttribute("room_code");
+var char_choice = document.getElementById("game_board").getAttribute("char_choice");
 
-// Function to initiate WebSocket connection
-function initWebSocket() {
-  chatSocket = new WebSocket(wsURL);
-
-  chatSocket.onopen = function(event) {
-    console.log('WebSocket is open and ready.');
-    
-    // Optionally, you can set up additional logic here after the WebSocket connection is established.
-  };
-
-  chatSocket.onmessage = function(e) {
-    let data = JSON.parse(e.data)
-    console.log('Data:', data)
-    if (data.type === 'invitation_received') {
-      console.log(`Received an invitation from ${data.sender}. Do you accept?`);
-      // Notify the user about the invitation
-      // You may choose to display this in your UI or handle it as per your application logic
-    } else if (data.type === 'opponent_joined_group') {
-      console.log(`${data.user} has joined the group.`);
-      // Process the information when the opponent joins the group
-    } else {
-      console.log("else");
-      // Handle other message types if needed
-    }
-  };
-
-  chatSocket.onclose = function(event) {
-    console.log('WebSocket connection closed.');
-    // Optionally, you can set up logic for handling closed connections here.
-  };
-
-  chatSocket.onerror = function(error) {
-    console.error('WebSocket error:', error);
-  };
-}
-
-// Call the function to initiate the WebSocket connection
-initWebSocket();
-if (typeof userData !== 'undefined') {
-  console.log('Logged in user:', userData.username);
-  
-  // You can use other properties of userData as needed
-} else {
-  console.log('User is not logged in.');
-}
-
-function inviteFriend(friend_name) {
-  let message = 'Invitation message';
-  if (chatSocket.readyState === WebSocket.OPEN) {
-    chatSocket.send(JSON.stringify({
-      'type': 'invitation',
-      'sender': userData.username,
-      'opponent': friend_name
-    }));
-  } else {
-    console.error('WebSocket is not ready.');
-  }
-}
-/*
-let form = document.getElementById('form')
-form.addEventListener('submit', (e)=> {
-  e.preventDefault()
-  let message = e.target.message.value 
-  chatSocket.send(JSON.stringify({
-    'message':message
-  }))
-  form.reset()
-})*/
-
-// Pong game logic
+var connectionString = 'ws://' + window.location.host + '/ws/play/' + roomCode + '/';
+var gameSocket = new WebSocket(connectionString);
 
 const canvas = document.getElementById("pongCanvas");
 const context = canvas.getContext("2d");
 const btnStart = document.getElementById("btnStart");
 const btnsStatus = document.getElementById("btnsStatus");
-const btnStatusPlay = document.getElementById("btnStatusPlay");
-const btnStatusPause = document.getElementById("btnStatusPause");
-const btnStatusRewind = document.getElementById("btnStatusRewind");
 
 const paddleWidth = 10;
 const paddleHeight = 80;
@@ -99,7 +28,6 @@ let scorePlayer2 = 0;
 let isPaused = false;
 
 function draw() {
-  
   // Clear the canvas
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.strokeStyle = "#41464b";
@@ -151,10 +79,6 @@ function draw() {
 
     // Move the paddles
     movePaddles();
-    chatSocket.send(JSON.stringify({
-      'message':paddle1Y,
-      'user':userData.username
-    }))
   }
 
   // Display the score
@@ -175,6 +99,14 @@ function movePaddles() {
   if (keysPressed.ArrowDown && paddle1Y + paddleHeight < canvas.height) {
     paddle1Y += paddleSpeed;
   }
+
+  // Player 2 controls
+  if (keysPressed.KeyW && paddle2Y > 0) {
+    paddle2Y -= paddleSpeed;
+  }
+  if (keysPressed.KeyS && paddle2Y + paddleHeight < canvas.height) {
+    paddle2Y += paddleSpeed;
+  }
 }
 
 function resetBall() {
@@ -188,41 +120,10 @@ const keysPressed = {};
 
 window.addEventListener("keydown", function (event) {
   keysPressed[event.code] = true;
-
-  // // Pause the game on Space key press
-  // if (event.code === "Space") {
-  //   isPaused = !isPaused;
-  //   if (isPaused) {
-  //     btnStatusPause.classList.remove("btn", "btn-outline-secondary");
-  //     btnStatusPause.classList.add("btn", "btn-secondary");
-  //   }
-  //   else if (!isPaused) {
-  //     btnStatusPause.classList.remove("btn", "btn-secondary");
-  //     btnStatusPause.classList.add("btn", "btn-outline-secondary");
-  //   }
-  // }
 });
 
 window.addEventListener("keyup", function (event) {
   keysPressed[event.code] = false;
-});
-
-btnStatusPause.addEventListener("click", function () {
-  isPaused = true;
-
-  btnStatusPause.classList.toggle("btn-outline-secondary");
-  btnStatusPause.classList.toggle("btn-secondary");
-  btnStatusPlay.classList.toggle("btn-secondary");
-  btnStatusPlay.classList.toggle("btn-outline-secondary");
-});
-
-btnStatusPlay.addEventListener("click", function () {
-  isPaused = false;
-
-  btnStatusPause.classList.toggle("btn-outline-secondary");
-  btnStatusPause.classList.toggle("btn-secondary");
-  btnStatusPlay.classList.toggle("btn-secondary");
-  btnStatusPlay.classList.toggle("btn-outline-secondary");
 });
 
 // Game loop
@@ -233,16 +134,6 @@ function gameLoop() {
   draw();
   requestAnimationFrame(gameLoop);
 }
-
-btnStart.addEventListener("click", function () {
-  gameLoop();
-  btnStatusPlay.classList.remove("btn", "btn-outline-secondary");
-  btnStatusPlay.classList.add("btn", "btn-secondary");
-});
-
-btnStatusRewind.addEventListener("click", function () {
-  resetGame();
-});
 
 function resetGame() {
   // Reimposta tutte le variabili del gioco al loro stato iniziale
@@ -256,3 +147,60 @@ function resetGame() {
 
   isPaused = false;
 }
+
+let playerNumber = 0;
+
+function connect() {
+  gameSocket.onopen = function open() {
+      console.log('WebSockets connection created.');
+      // on websocket open, send the START event.
+      gameSocket.send(JSON.stringify({
+          "event": "START",
+          "message": ""
+      }));
+  };
+
+  gameSocket.onclose = function (e) {
+      console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+      setTimeout(function () {
+          connect();
+      }, 1000);
+  };
+  // Sending the info about the room
+  gameSocket.onmessage = function (e) {
+      // On getting the message from the server
+      // Do the appropriate steps on each event.
+      let data = JSON.parse(e.data);
+      data = data["payload"];
+      let message = data['message'];
+      let event = data["event"];
+      console.log(event);
+      switch (event) {
+          case "START":
+              resetGame();
+              break;
+          case "STARTGAME":
+              gameLoop();
+              break;
+          case "END":
+              alert(message);
+              resetGame();
+              break;
+          case "MOVE":
+              if(message["player"] != char_choice){
+                  make_move(message["index"], message["player"])
+                  myturn = true;
+                  document.getElementById("alert_move").style.display = 'inline';       
+              }
+              break;
+          default:
+              console.log("No event")
+      }
+  };
+
+  if (gameSocket.readyState == WebSocket.OPEN) {
+      gameSocket.onopen();
+  }
+}
+
+connect();

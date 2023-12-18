@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="head">
+        <h1>Pong Game</h1>
+        <h3>Welcome to room_{{room_code}}</h3>
+    </div>
+    <div class="container text-center">
+        <div id = "game_board" room_code = {{room_code}} char_choice = {{char_choice}}>
+            <canvas id="pongCanvas" width="1200" height="500" class="mx-auto" ></canvas>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock content %}

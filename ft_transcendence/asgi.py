@@ -12,15 +12,16 @@ import os
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-import online.routing
+from online.consumers import PongConsumer
+from django.urls import path
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ft_transcendence.settings')
 
 application = ProtocolTypeRouter({
     'http':get_asgi_application(),
     'websocket':AuthMiddlewareStack(
-        URLRouter(
-            online.routing.websocket_urlpatterns
-        )
+        URLRouter([
+            path('ws/play/<str:room_code>/', PongConsumer.as_asgi()),
+        ])
     )
 })
