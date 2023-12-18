@@ -128,9 +128,7 @@ window.addEventListener("keyup", function (event) {
 
 // Game loop
 function gameLoop() {
-  btnStart.remove();
   canvas.style.display = 'block';
-  btnsStatus.style.display = 'block';
   draw();
   requestAnimationFrame(gameLoop);
 }

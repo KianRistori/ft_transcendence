@@ -1,6 +1,10 @@
 import json
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+# from channels import Group
+
 class PongConsumer(AsyncJsonWebsocketConsumer):
+    user_count = {}
+
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_code']
         self.room_group_name = 'room_%s' % self.room_name
@@ -10,6 +14,20 @@ class PongConsumer(AsyncJsonWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
+
+        # Incrementa il conteggio degli utenti per questo gruppo
+        if self.room_group_name in self.user_count:
+            self.user_count[self.room_group_name] += 1
+        else:
+            self.user_count[self.room_group_name] = 1
+
+        # print(self.user_count[self.room_group_name])
+
+        if self.user_count[self.room_group_name] == 2:
+            await self.channel_layer.group_send(self.room_group_name, {
+                'type': 'send_message',
+                "event": "STARTGAME"
+            })
         await self.accept()
 
     async def disconnect(self, close_code):
@@ -19,6 +37,8 @@ class PongConsumer(AsyncJsonWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
+        # Decrementa il conteggio degli utenti per questo gruppo
+        self.user_count[self.room_group_name] -= 1
 
     async def receive(self, text_data):
         """
