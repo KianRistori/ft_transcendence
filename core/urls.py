@@ -9,4 +9,6 @@ urlpatterns = [
     path('settings/', views.settings, name='settings'),
     path('friends/', views.view_friends, name='view_friends'),
     path('friends/search/', views.search_and_send_friend_request, name='search_and_send_friend_request'),
+    path('profile/<int:id_user>/', views.profile_page, name='profile_page'),
+    path('myprofile/', views.my_profile_page, name='my_profile_page'),
 ]

@@ -2,22 +2,24 @@
 {% load static %}
 
 {% block content %}
-<div class="wrapper">
-  <h1>Welcome to Pong</h1>
-  <form method="POST">
-    {% csrf_token %}
-    <div class='form-control'>
-      <label for="room">Room id</label>
-      <input id="room" type="text" name="room_code" required />
-    </div>
-    <div class='form-control'>
-      <label for="character_choice">Your character</label>
-      <select for="character_choice" name = "character_choice">
-      <option value="Player 1">Player 1</option>
-      <option value="Player 2">Player 2</option>
-      </select>
-    </div>
-    <input type="submit" class="button" value="Start Game" />
+<div class="container mt-5">
+  <div class="p-4 mx-auto">
+      <h2 class="text-center">Enter a room code to join a game</h2>
+      <form method="POST" class="mb-3">
+          {% csrf_token %}
+          <div class="input-group mt-3">
+              <input id="room" type="text" class="form-control" placeholder="Room ID" name="room_code" required />
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Enter</button>
+              </div>
+          </div>
+      </form>
+      <h2 class="text-center">Or create a new game</h2>
+      <form class="text-center mt-3" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="create_new" value="true" />
+          <button type="submit" class="btn btn-success btn-block">Create new match</button>
+      </form>
+  </div>
 </div>
-</form>
 {% endblock content %}

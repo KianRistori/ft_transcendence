@@ -1,5 +1,5 @@
 var roomCode = document.getElementById("game_board").getAttribute("room_code");
-var char_choice = document.getElementById("game_board").getAttribute("char_choice");
+var h1HeadingVS = document.getElementById("headingVS");
 
 var connectionString = 'ws://' + window.location.host + '/ws/play/' + roomCode + '/';
 var gameSocket = new WebSocket(connectionString);
@@ -27,6 +27,8 @@ let scorePlayer2 = 0;
 
 let isPaused = false;
 
+let host = false;
+
 function draw() {
   // Clear the canvas
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -48,8 +50,15 @@ function draw() {
     context.closePath();
 
     // Move the ball
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
+    if (host) {
+      ballX += ballSpeedX;
+      ballY += ballSpeedY;
+      gameSocket.send(JSON.stringify({
+        "event": "BALL_MOVE",
+        "ballX": ballX,
+        "ballY": ballY,
+      }));
+    }
 
     // Bounce off the top and bottom edges
     if (ballY + ballSize > canvas.height || ballY - ballSize < 0) {
@@ -69,11 +78,39 @@ function draw() {
     // Check for a point scored
     if (ballX - ballSize < 0) {
       // Player 2 scores
-      scorePlayer2++;
+      if (host) {
+        scorePlayer2++;
+        if (scorePlayer2 == 6) {
+          gameSocket.send(JSON.stringify({
+            "event": "END",
+            "message": "PLAYER2",
+            "scorePlayer1": scorePlayer1,
+            "scorePlayer2": scorePlayer2,
+          }));
+        }
+        gameSocket.send(JSON.stringify({
+          "event": "SCORE_PLAYER2",
+          "message": scorePlayer2,
+        }));
+      }
       resetBall();
     } else if (ballX + ballSize > canvas.width) {
       // Player 1 scores
-      scorePlayer1++;
+      if (host) {
+        scorePlayer1++;
+        if (scorePlayer1 == 6) {
+          gameSocket.send(JSON.stringify({
+            "event": "END",
+            "message": "PLAYER1",
+            "scorePlayer1": scorePlayer1,
+            "scorePlayer2": scorePlayer2,
+          }));
+        }
+        gameSocket.send(JSON.stringify({
+          "event": "SCORE_PLAYER1",
+          "message": scorePlayer1,
+        }));
+      }
       resetBall();
     }
 
@@ -93,26 +130,52 @@ function draw() {
 
 function movePaddles() {
   // Player 1 controls
-  if (keysPressed.ArrowUp && paddle1Y > 0) {
-    paddle1Y -= paddleSpeed;
-  }
-  if (keysPressed.ArrowDown && paddle1Y + paddleHeight < canvas.height) {
-    paddle1Y += paddleSpeed;
-  }
+  if (host) {
+    if (keysPressed.ArrowUp && paddle1Y > 0) {
+      paddle1Y -= paddleSpeed;
+      gameSocket.send(JSON.stringify({
+        "event": "MOVE_PLAYER1",
+        "message": paddle1Y,
+      }));
+    }
 
-  // Player 2 controls
-  if (keysPressed.KeyW && paddle2Y > 0) {
-    paddle2Y -= paddleSpeed;
-  }
-  if (keysPressed.KeyS && paddle2Y + paddleHeight < canvas.height) {
-    paddle2Y += paddleSpeed;
+    if (keysPressed.ArrowDown && paddle1Y + paddleHeight < canvas.height) {
+      paddle1Y += paddleSpeed;
+      gameSocket.send(JSON.stringify({
+        "event": "MOVE_PLAYER1",
+        "message": paddle1Y,
+      }));
+    }
+  } else {
+    if (keysPressed.ArrowUp && paddle2Y > 0) {
+      paddle2Y -= paddleSpeed;
+      gameSocket.send(JSON.stringify({
+        "event": "MOVE_PLAYER2",
+        "message": paddle2Y,
+      }));
+    }
+
+    if (keysPressed.ArrowDown && paddle2Y + paddleHeight < canvas.height) {
+      paddle2Y += paddleSpeed;
+      gameSocket.send(JSON.stringify({
+        "event": "MOVE_PLAYER2",
+        "message": paddle2Y,
+      }));
+    }
   }
 }
 
 function resetBall() {
-  ballX = canvas.width / 2;
-  ballY = canvas.height / 2;
-  ballSpeedX = -ballSpeedX;
+  if (host) {
+    ballX = canvas.width / 2;
+    ballY = canvas.height / 2;
+    ballSpeedX = -ballSpeedX;
+    gameSocket.send(JSON.stringify({
+      "event": "BALL_RESET",
+      "ballX": ballX,
+      "ballY": ballY,
+    }));
+  }
 }
 
 // Keyboard input handling
@@ -172,6 +235,8 @@ function connect() {
       data = data["payload"];
       let message = data['message'];
       let event = data["event"];
+      let ballXRecived = data["ballX"];
+      let ballYRecived = data["ballY"];
       console.log(event);
       switch (event) {
           case "START":
@@ -183,13 +248,33 @@ function connect() {
           case "END":
               alert(message);
               resetGame();
+              window.location.href = "/online/";
               break;
-          case "MOVE":
-              if(message["player"] != char_choice){
-                  make_move(message["index"], message["player"])
-                  myturn = true;
-                  document.getElementById("alert_move").style.display = 'inline';       
-              }
+          case "HOST":
+              host = true;
+              break;
+          case "MOVE_PLAYER1":
+              paddle1Y = message;
+              break;
+          case "MOVE_PLAYER2":
+              paddle2Y = message;
+              break;
+          case "BALL_MOVE":
+              ballX = ballXRecived;
+              ballY = ballYRecived;
+              break;
+          case "BALL_RESET":
+                ballX = ballXRecived;
+                ballY = ballYRecived;
+                break;
+          case "VS_HEADING":
+              h1HeadingVS.innerHTML = message;
+              break;
+          case "SCORE_PLAYER1":
+              scorePlayer1 = message;
+              break;
+          case "SCORE_PLAYER2":
+              scorePlayer2 = message;
               break;
           default:
               console.log("No event")
