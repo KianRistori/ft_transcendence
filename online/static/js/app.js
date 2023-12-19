@@ -27,6 +27,17 @@ let scorePlayer2 = 0;
 
 let isPaused = false;
 
+let form = document.getElementById('form')
+        form.addEventListener('submit', (e)=> {
+            e.preventDefault()
+            let message = e.target.message.value 
+            gameSocket.send(JSON.stringify({
+                'type':'chat_message',
+                'message':message
+            }))
+            form.reset()
+        })
+
 function draw() {
   // Clear the canvas
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -169,30 +180,46 @@ function connect() {
       // On getting the message from the server
       // Do the appropriate steps on each event.
       let data = JSON.parse(e.data);
+      console.log(data)
       data = data["payload"];
-      let message = data['message'];
-      let event = data["event"];
-      console.log(event);
-      switch (event) {
-          case "START":
-              resetGame();
-              break;
-          case "STARTGAME":
-              gameLoop();
-              break;
-          case "END":
-              alert(message);
-              resetGame();
-              break;
-          case "MOVE":
-              if(message["player"] != char_choice){
-                  make_move(message["index"], message["player"])
-                  myturn = true;
-                  document.getElementById("alert_move").style.display = 'inline';       
-              }
-              break;
-          default:
-              console.log("No event")
+      console.log("data.type = ",data.type)
+      if (data.type == 'chat_message')
+      {
+        let messages = document.getElementById('messages')
+        messages.insertAdjacentHTML('beforeend',
+                            `<div class="d-flex flex-row justify-content-start mb-4">
+              <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                <p class="small mb-0">${data.message}</p>
+              </div>
+            </div>`
+        )
+      }
+      else
+      {
+        let message = data['message'];
+        let event = data["event"];
+        console.log(event);
+        switch (event) {
+            case "START":
+                resetGame();
+                break;
+            case "STARTGAME":
+                gameLoop();
+                break;
+            case "END":
+                alert(message);
+                resetGame();
+                break;
+            case "MOVE":
+                if(message["player"] != char_choice){
+                    make_move(message["index"], message["player"])
+                    myturn = true;
+                    document.getElementById("alert_move").style.display = 'inline';       
+                }
+                break;
+            default:
+                console.log("No event")
+        }
       }
   };
 
