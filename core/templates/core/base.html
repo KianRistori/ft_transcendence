@@ -51,6 +51,7 @@
                   <img src="{{user_profile.profileImg.url}}" width="50" height="50" class="rounded-circle object-fit-cover" alt="Profile Picture">
                 </button>
                 <ul class="dropdown-menu dropdown-menu-lg-end">
+                  <li><a class="dropdown-item" href="{% url 'my_profile_page' %}">{% trans 'My Profile' %}</a></li>
                   <li><a class="dropdown-item" href="{% url 'settings' %}">{% trans 'Settings' %}</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="btn btn-outline-success dropdown-item" href="{% url 'logout' %}" role="button">{% trans 'Logout' %}</a></li>

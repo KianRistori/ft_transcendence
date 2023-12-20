@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.db.models import Q
 from django.contrib import messages
-from .models import Profile, Friendship, FriendRequest, Message
+from .models import Profile, Friendship, FriendRequest, MatchHistory
 from django.contrib.auth.decorators import login_required
 from .forms import MessageForm
 
@@ -136,3 +136,15 @@ def view_friends(request):
             return redirect('/friends/')
 
     return render(request, 'friends/home.html', {'friends': friends, 'received_requests': received_requests})
+
+@login_required(login_url='signin')
+def profile_page(request, id_user):
+    profile = Profile.objects.get(id_user=id_user)
+    match_history = MatchHistory.objects.filter(Q(profile_winner=profile) | Q(profile_loser=profile)).order_by('-match_date')
+    return render(request, 'profile/home.html', {'profile': profile, 'match_history': match_history})
+
+@login_required(login_url='signin')
+def my_profile_page(request):
+    profile = Profile.objects.get(user=request.user)
+    match_history = MatchHistory.objects.filter(Q(profile_winner=profile) | Q(profile_loser=profile)).order_by('-match_date')
+    return render(request, 'profile/myhome.html', {'profile': profile, 'match_history': match_history})

@@ -3,24 +3,20 @@
 
 {% block content %}
 <div class="wrapper">
-    <div class="head">
-        <h1>Pong Game</h1>
-        <h3>Welcome to room_{{room_code}}</h3>
-    </div>
     <div class='d-flex flex-row justify-content-around'>
-        <div class="container text-center">
-            <div id = "game_board" room_code = {{room_code}} char_choice = {{char_choice}}>
+        <div class="container text-center mt-5">
+            <h1 id="headingVS">Share this code with your opponent: {{room_code}}</h1>
+            <div id = "game_board" room_code = {{room_code}}>
                 <canvas id="pongCanvas" width="1200" height="500" class="mx-auto" style="display: none;"></canvas>
             </div>
         </div>
-        <div>
-            <h1>Lets chat!</h1>
-    
+        <div class="flex-col justify-content-between">
+            <div style="overflow: auto; max-height: 80vh;">
+                <div id="messages"></div>
+            </div>
             <form id="form">
                 <input type="text" name="message"/>
             </form>
-    
-            <div id="messages"></div>
         </div> 
     </div>
 </div>

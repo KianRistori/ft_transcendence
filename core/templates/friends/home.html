@@ -12,9 +12,9 @@
         {% for friend in friends %}
           <li class="list-group-item d-flex justify-content-between align-items-center">
             {% if friend.user1 == user %}
-              {{ friend.user2.username }}
+            <a  href="{% url 'profile_page' id_user=friend.user2.id %}">{{ friend.user2.username }}</a>
             {% else %}
-              {{ friend.user1.username }}
+            <a  href="{% url 'profile_page' id_user=friend.user1.id %}">{{ friend.user1.username }}</a>
             {% endif %}
             <form method="post" action="{% url 'view_friends' %}">
               {% csrf_token %}
