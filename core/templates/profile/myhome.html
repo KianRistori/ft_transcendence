@@ -1,10 +1,10 @@
 {% extends 'core/base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mt-5">
-    <h1>My Profile</h1>
+    <h1>{% trans "My Profile" %}</h1>
     <div class="row">
-
         <div class="col-md-4">
             <div class="card">
                 <img src="{{ profile.profileImg.url }}" class="card-img-top" alt="{{ profile.user.username }}'s Profile Image">
@@ -17,14 +17,14 @@
 
         <!-- Cronologia delle partite -->
         <div class="col-md-8">
-            <h2>Match History</h2>
+            <h2>{% trans "Match History" %}</h2>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Winner</th>
-                        <th scope="col">Loser</th>
-                        <th scope="col">Score</th>
+                        <th scope="col">{% trans "Date" %}</th>
+                        <th scope="col">{% trans "Winner" %}</th>
+                        <th scope="col">{% trans "Loser" %}</th>
+                        <th scope="col">{% trans "Score" %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,14 +33,14 @@
                         <td>{{ match.match_date|date:"F j, Y H:i" }}</td>
                         <td>
                             {% if match.profile_winner.user.username == profile.user.username %}
-                                Me
+                                {% trans "Me" %}
                             {% else %}
                                 {{ match.profile_winner.user.username }}
                             {% endif %}
                         </td>
                         <td>
                             {% if match.profile_loser.user.username == profile.user.username %}
-                                Me
+                                {% trans "Me" %}
                             {% else %}
                                 {{ match.profile_loser.user.username }}
                             {% endif %}

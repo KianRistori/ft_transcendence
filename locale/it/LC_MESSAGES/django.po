@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-16 11:30+0100\n"
+"POT-Creation-Date: 2023-12-20 10:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,12 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\core\templates\auth\signin.html:7 .\core\templates\auth\signin.html:23
-#: .\core\templates\core\base.html:60
+#: .\core\templates\core\base.html:61
 msgid "Sign In"
 msgstr "Accedi"
 
 #: .\core\templates\auth\signup.html:7 .\core\templates\auth\signup.html:29
-#: .\core\templates\core\base.html:61
+#: .\core\templates\core\base.html:62
 msgid "Sign Up"
 msgstr "Registrati"
 
@@ -40,11 +40,17 @@ msgstr ""
 msgid "Friends"
 msgstr "Amici"
 
-#: .\core\templates\core\base.html:54 .\core\templates\core\settings.html:9
+#: .\core\templates\core\base.html:54 .\core\templates\profile\myhome.html:6
+#, fuzzy
+#| msgid "Profile Image"
+msgid "My Profile"
+msgstr "Immagine di Profilo"
+
+#: .\core\templates\core\base.html:55 .\core\templates\core\settings.html:9
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: .\core\templates\core\base.html:56
+#: .\core\templates\core\base.html:57
 msgid "Logout"
 msgstr "Esci"
 
@@ -124,6 +130,36 @@ msgstr "Risultato della ricerca"
 msgid "Send Request"
 msgstr "Invia richiesta"
 
+#: .\core\templates\profile\home.html:19
+#: .\core\templates\profile\myhome.html:20
+msgid "Match History"
+msgstr "Cronologia delle partite"
+
+#: .\core\templates\profile\home.html:23
+#: .\core\templates\profile\myhome.html:24
+msgid "Date"
+msgstr "Data"
+
+#: .\core\templates\profile\home.html:24
+#: .\core\templates\profile\myhome.html:25
+msgid "Winner"
+msgstr "Vincitore"
+
+#: .\core\templates\profile\home.html:25
+#: .\core\templates\profile\myhome.html:26
+msgid "Loser"
+msgstr "Perdente"
+
+#: .\core\templates\profile\home.html:26
+#: .\core\templates\profile\myhome.html:27
+msgid "Score"
+msgstr "Punteggio"
+
+#: .\core\templates\profile\myhome.html:36
+#: .\core\templates\profile\myhome.html:43
+msgid "Me"
+msgstr "Io"
+
 #: .\ft_transcendence\settings.py:147
 msgid "English"
 msgstr "Inglese"
@@ -172,3 +208,23 @@ msgstr "Inzia il Torneo"
 #: .\offline\templates\tournament\table.html:10
 msgid "Start Match"
 msgstr "Iniza la partita"
+
+#: .\online\templates\online\game.html:7
+msgid "Share this code with your opponent:"
+msgstr "Condividi questo codice con il tuo avversario:"
+
+#: .\online\templates\online\home.html:7
+msgid "Enter a room code to join a game"
+msgstr "Inserisci il codice della stanza per entrare in partita"
+
+#: .\online\templates\online\home.html:13
+msgid "Enter"
+msgstr "Entra"
+
+#: .\online\templates\online\home.html:17
+msgid "Or create a new game"
+msgstr "Oppure crea un nuovo match"
+
+#: .\online\templates\online\home.html:21
+msgid "Create new Match"
+msgstr "Crea il Match"

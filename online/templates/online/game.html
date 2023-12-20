@@ -1,10 +1,10 @@
 {% extends 'core/base.html' %}
 {% load static %}
-
+{% load i18n %}
 {% block content %}
 <div class="wrapper">
     <div class="container text-center mt-5">
-        <h1 id="headingVS">Share this code with your opponent: {{room_code}}</h1>
+        <h1 id="headingVS">{% trans 'Share this code with your opponent:' %} {{room_code}}</h1>
         <div id = "game_board" room_code = {{room_code}}>
             <canvas id="pongCanvas" width="1200" height="500" class="mx-auto" style="display: none;"></canvas>
         </div>

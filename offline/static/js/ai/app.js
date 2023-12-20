@@ -107,8 +107,6 @@ function updateAIBall()
 
 function aiMovement()
 {
-  console.log("x : " + aiBallX)
-  console.log("y : " + aiBallY)
   let paddleCenter = paddle1Y + paddleHeight / 2;
 
   // Calculate the predicted ball position after reaching the AI's side
@@ -146,19 +144,6 @@ const keysPressed = {};
 
 window.addEventListener("keydown", function (event) {
   keysPressed[event.code] = true;
-
-  // // Pause the game on Space key press
-  // if (event.code === "Space") {
-  //   isPaused = !isPaused;
-  //   if (isPaused) {
-  //     btnStatusPause.classList.remove("btn", "btn-outline-secondary");
-  //     btnStatusPause.classList.add("btn", "btn-secondary");
-  //   }
-  //   else if (!isPaused) {
-  //     btnStatusPause.classList.remove("btn", "btn-secondary");
-  //     btnStatusPause.classList.add("btn", "btn-outline-secondary");
-  //   }
-  // }
 });
 
 window.addEventListener("keyup", function (event) {

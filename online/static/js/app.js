@@ -237,7 +237,6 @@ function connect() {
       let event = data["event"];
       let ballXRecived = data["ballX"];
       let ballYRecived = data["ballY"];
-      console.log(event);
       switch (event) {
           case "START":
               resetGame();
