@@ -8,6 +8,14 @@
         <div id = "game_board" room_code = {{room_code}}>
             <canvas id="pongCanvas" width="1200" height="500" class="mx-auto" style="display: none;"></canvas>
         </div>
+        <div class="flex-col justify-content-between">
+            <div style="overflow: auto; max-height: 80vh;">
+                <div id="messages"></div>
+            </div>
+            <form id="form">
+                <input type="text" name="message"/>
+            </form>
+        </div> 
     </div>
 </div>
 <script src="{% static 'js/app.js' %}"></script>

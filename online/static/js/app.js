@@ -25,8 +25,20 @@ let ballSpeedY = 5;
 let scorePlayer1 = 0;
 let scorePlayer2 = 0;
 
+let currentPlayer;
+
 let isPaused = false;
 
+let form = document.getElementById('form')
+        form.addEventListener('submit', (e)=> {
+            e.preventDefault()
+            let message = e.target.message.value 
+            gameSocket.send(JSON.stringify({
+                'type':'chat_message',
+                'message':message
+            }))
+            form.reset()
+        })
 let host = false;
 
 function draw() {
@@ -232,51 +244,88 @@ function connect() {
       // On getting the message from the server
       // Do the appropriate steps on each event.
       let data = JSON.parse(e.data);
+      //console.log(data)
       data = data["payload"];
-      let message = data['message'];
-      let event = data["event"];
-      let ballXRecived = data["ballX"];
-      let ballYRecived = data["ballY"];
-      switch (event) {
-          case "START":
+      //console.log("data.type = ",data.type)
+      if (data.type == 'chat_message')
+      {
+        let messages = document.getElementById('messages')
+        console.log(currentPlayer)
+        if (currentPlayer.localeCompare(data.user))
+        {
+          messages.insertAdjacentHTML('afterend',
+                              `<div class="d-flex flex-row justify-content-start mb-4">
+                <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 15, 237,.2);">
+                  <p class="small mb-0">${data.message}</p>
+                </div>
+              </div>`
+          )
+        }else{
+          messages.insertAdjacentHTML('afterend',
+                              `<div class="d-flex flex-row justify-content-end mb-4">
+                <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                  <p class="small mb-0">${data.message}</p>
+                </div>
+              </div>`
+          )
+        }
+      }
+      else
+      {
+        let message = data['message'];
+        let event = data["event"];
+        let ballXRecived = data["ballX"];
+        let ballYRecived = data["ballY"];
+        //console.log(event);
+        switch (event) {
+            case "START":
               resetGame();
               break;
-          case "STARTGAME":
+            case "STARTGAME":
               gameLoop();
               break;
-          case "END":
+            case "END":
               alert(message);
               resetGame();
               window.location.href = "/online/";
               break;
-          case "HOST":
+            case "MOVE":
+              if(message["player"] != char_choice){
+                make_move(message["index"], message["player"])
+                myturn = true;
+                document.getElementById("alert_move").style.display = 'inline';       
+              }
+              break;
+            case "HOST":
               host = true;
               break;
-          case "MOVE_PLAYER1":
+            case "MOVE_PLAYER1":
               paddle1Y = message;
               break;
-          case "MOVE_PLAYER2":
+            case "MOVE_PLAYER2":
               paddle2Y = message;
               break;
-          case "BALL_MOVE":
+            case "BALL_MOVE":
               ballX = ballXRecived;
               ballY = ballYRecived;
               break;
-          case "BALL_RESET":
-                ballX = ballXRecived;
-                ballY = ballYRecived;
-                break;
-          case "VS_HEADING":
-              h1HeadingVS.innerHTML = message;
+            case "BALL_RESET":
+              ballX = ballXRecived;
+              ballY = ballYRecived;
               break;
-          case "SCORE_PLAYER1":
+            case "VS_HEADING":
+              h1HeadingVS.innerHTML = message;
+              currentPlayer = message.split(' ')[0]
+              break;
+            case "SCORE_PLAYER1":
               scorePlayer1 = message;
               break;
-          case "SCORE_PLAYER2":
+              case "SCORE_PLAYER2":
               scorePlayer2 = message;
               break;
-          default:
+            default:
               console.log("No event")
+        }
       }
   };
 

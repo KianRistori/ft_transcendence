@@ -69,10 +69,25 @@ class PongConsumer(AsyncJsonWebsocketConsumer):
         Get the event and send the appropriate event
         """
         response = json.loads(text_data)
+        type = response.get("type", None)
         event = response.get("event", None)
         message = response.get("message", None)
         ballX = response.get("ballX", None)
         ballY = response.get("ballY", None)
+        if type == 'chat_message':
+            await self.channel_layer.group_send(self.room_group_name, {
+                'type': 'chat_message',
+                'message': message,
+                'user':self.scope['user'].username
+            })
+            
+        if event == 'MOVE':
+            # Send message to room group
+            await self.channel_layer.group_send(self.room_group_name, {
+                'type': 'send_message',
+                'message': message,
+                "event": "MOVE"
+            })
 
         if event == 'START':
             # Send message to room group
@@ -178,4 +193,11 @@ class PongConsumer(AsyncJsonWebsocketConsumer):
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             "payload": res,
+        }))
+    
+    async def chat_message(self, event):
+        message = event['message']
+
+        await self.send(text_data=json.dumps({
+            "payload": event,
         }))
