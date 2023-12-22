@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 import os
-
 import environ
 
 # Set the project base directory
@@ -26,12 +25,17 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
+SOCIAL_AUTH_42_KEY = env('SOCIAL_AUTH_42_KEY'),
+SOCIAL_AUTH_42_SECRET = env('SOCIAL_AUTH_42_SECRET'),
+SOCIAL_AUTH_42_REDIRECT_URI = env('SOCIAL_AUTH_42_REDIRECT_URI'),
+SOCIAL_AUTH_42_AUTHORIZE_URL = env('SOCIAL_AUTH_42_AUTORIZE_URL'),
+SOCIAL_AUTH_42_TOKEN_URL = env('SOCIAL_AUTH_42_TOKEN_URL'),
+SOCIAL_AUTH_42_FULL_URL = env('SOCIAL_AUTH_42_FULL_URL'),
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
