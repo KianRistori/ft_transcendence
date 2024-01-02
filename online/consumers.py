@@ -11,6 +11,7 @@ class PongConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_code']
         self.room_group_name = 'room_%s' % self.room_name
+        
 
         # Join room group
         await self.channel_layer.group_add(
@@ -50,6 +51,11 @@ class PongConsumer(AsyncJsonWebsocketConsumer):
                 'type': 'send_message',
                 "event": "STARTGAME"
             })
+        
+        if self.user_count[self.room_group_name] > 2:
+            # Numero massimo di utenti raggiunto, rifiuta la connessione
+            await self.close()
+            return
         
         await self.accept()
 
