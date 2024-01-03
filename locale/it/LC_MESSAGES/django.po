@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-20 10:11+0100\n"
+"POT-Creation-Date: 2024-01-03 16:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,38 +19,58 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\core\templates\auth\signin.html:7 .\core\templates\auth\signin.html:23
-#: .\core\templates\core\base.html:61
+#: .\core\templates\core\base.html:79
 msgid "Sign In"
 msgstr "Accedi"
 
 #: .\core\templates\auth\signup.html:7 .\core\templates\auth\signup.html:29
-#: .\core\templates\core\base.html:62
+#: .\core\templates\core\base.html:80
 msgid "Sign Up"
 msgstr "Registrati"
 
-#: .\core\templates\core\base.html:22 .\core\templates\core\home.html:16
+#: .\core\templates\core\base.html:28 .\core\templates\core\home.html:16
 msgid "Offline"
 msgstr ""
 
-#: .\core\templates\core\base.html:25 .\core\templates\core\home.html:19
+#: .\core\templates\core\base.html:31 .\core\templates\core\home.html:19
 msgid "Online"
 msgstr ""
 
-#: .\core\templates\core\base.html:28
+#: .\core\templates\core\base.html:34
 msgid "Friends"
 msgstr "Amici"
 
-#: .\core\templates\core\base.html:54 .\core\templates\profile\myhome.html:6
+#: .\core\templates\core\base.html:56
+msgid "Accessibility"
+msgstr "Accessibilità"
+
+#: .\core\templates\core\base.html:59
+msgid "Increase Text Size"
+msgstr "Ingrandisci il testo"
+
+#: .\core\templates\core\base.html:60
+msgid "Decrease Text Size"
+msgstr "Diminuisci il testo"
+
+#: .\core\templates\core\base.html:61
+msgid "Toggle High Contrast"
+msgstr "Attiva/disattiva contrasto elevato"
+
+#: .\core\templates\core\base.html:63
+msgid "Reset value"
+msgstr "Resetta i valori"
+
+#: .\core\templates\core\base.html:72 .\core\templates\profile\myhome.html:6
 #, fuzzy
 #| msgid "Profile Image"
 msgid "My Profile"
 msgstr "Immagine di Profilo"
 
-#: .\core\templates\core\base.html:55 .\core\templates\core\settings.html:9
+#: .\core\templates\core\base.html:73 .\core\templates\core\settings.html:9
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: .\core\templates\core\base.html:57
+#: .\core\templates\core\base.html:75
 msgid "Logout"
 msgstr "Esci"
 
@@ -160,15 +180,15 @@ msgstr "Punteggio"
 msgid "Me"
 msgstr "Io"
 
-#: .\ft_transcendence\settings.py:147
+#: .\ft_transcendence\settings.py:151
 msgid "English"
 msgstr "Inglese"
 
-#: .\ft_transcendence\settings.py:148
+#: .\ft_transcendence\settings.py:152
 msgid "Italian"
 msgstr "Italiano"
 
-#: .\ft_transcendence\settings.py:149
+#: .\ft_transcendence\settings.py:153
 msgid "French"
 msgstr "Francese"
 
