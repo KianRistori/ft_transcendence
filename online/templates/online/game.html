@@ -5,17 +5,19 @@
 <div class="wrapper">
     <div class="container text-center mt-5">
         <h1 id="headingVS">{% trans 'Share this code with your opponent:' %} {{room_code}}</h1>
-        <div id = "game_board" room_code = {{room_code}}>
-            <canvas id="pongCanvas" width="1200" height="500" class="mx-auto" style="display: none;"></canvas>
-        </div>
-        <div class="flex-col justify-content-between">
-            <div style="overflow: auto; max-height: 80vh;">
-                <div id="messages"></div>
+        <div class="d-flex justify-content-between">
+            <div id = "game_board" room_code = {{room_code}} style="display :flex">
+                <canvas id="pongCanvas" width="1200" height="500" class="mx-auto" style="display: none;"></canvas>
             </div>
-            <form id="form">
-                <input type="text" name="message"/>
-            </form>
-        </div> 
+            <div id="gameChat" class="flex-column justify-content-end d-none">
+                <div style="overflow: auto; max-height: 70vh;">
+                    <div id="messages"></div>
+                </div>
+                <form id="form">
+                    <input type="text" name="message"/>
+                </form>
+            </div> 
+        </div>
     </div>
 </div>
 <script src="{% static 'js/app.js' %}"></script>
