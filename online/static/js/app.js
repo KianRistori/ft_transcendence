@@ -206,7 +206,6 @@ window.addEventListener("keyup", function (event) {
 function gameLoop() {
   setTimeout(10000)
   canvas.style.display = 'block';
-  console.log("lelle")
   gameChat.classList.remove('d-none');
   gameChat.classList.add('d-flex');
   draw();
