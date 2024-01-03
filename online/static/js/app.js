@@ -8,6 +8,7 @@ const canvas = document.getElementById("pongCanvas");
 const context = canvas.getContext("2d");
 const btnStart = document.getElementById("btnStart");
 const btnsStatus = document.getElementById("btnsStatus");
+const gameChat = document.getElementById('gameChat');
 
 const paddleWidth = 10;
 const paddleHeight = 80;
@@ -203,7 +204,11 @@ window.addEventListener("keyup", function (event) {
 
 // Game loop
 function gameLoop() {
+  setTimeout(10000)
   canvas.style.display = 'block';
+  console.log("lelle")
+  gameChat.classList.remove('d-none');
+  gameChat.classList.add('d-flex');
   draw();
   requestAnimationFrame(gameLoop);
 }
@@ -253,7 +258,7 @@ function connect() {
         console.log(currentPlayer)
         if (currentPlayer.localeCompare(data.user))
         {
-          messages.insertAdjacentHTML('afterend',
+          messages.insertAdjacentHTML('beforeend',
                               `<div class="d-flex flex-row justify-content-start mb-4">
                 <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 15, 237,.2);">
                   <p class="small mb-0">${data.message}</p>
@@ -261,7 +266,7 @@ function connect() {
               </div>`
           )
         }else{
-          messages.insertAdjacentHTML('afterend',
+          messages.insertAdjacentHTML('beforeend',
                               `<div class="d-flex flex-row justify-content-end mb-4">
                 <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
                   <p class="small mb-0">${data.message}</p>
