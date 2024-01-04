@@ -8,6 +8,15 @@
 </head>
 <div class="container text-center">
   <h1 class="mt-4 mb-5">1 VS 1</h1>
+  <h3 id="pointsTitle" class="mt-5 mb-3">{% trans 'Select the win point' %}</h3>
+  <div id="btnsWinPoint" class="btn-group mb-3" role="group" aria-label="First group">
+    <button type="button" class="btn btn-outline-secondary btn-lg" data-btn="2">2</button>
+    <button type="button" class="btn btn-outline-secondary btn-lg" data-btn="4">4</button>
+    <button type="button" class="btn btn-outline-secondary btn-lg" data-btn="6">6</button>
+    <button type="button" class="btn btn-outline-secondary btn-lg" data-btn="8">8</button>
+    <button type="button" class="btn btn-outline-secondary btn-lg" data-btn="10">10</button>
+    <button type="button" class="btn btn-outline-secondary btn-lg" data-btn="12">12</button>
+  </div>
   <div class="alert alert-secondary mb-3" role="alert">{% trans 'Player 1 Moves with Arrow Up and Arrow Down, Player 2 moves with W and S' %}</div>
   <button id="btnStart" type="button" class="btn btn-primary">{% trans 'Start Game' %}</button>
   <canvas id="pongCanvas" width="1200" height="500" class="mx-auto" style="display: none;"></canvas>

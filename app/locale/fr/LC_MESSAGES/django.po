@@ -1,0 +1,264 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-04 15:28+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\app\core\templates\auth\signin.html:7
+#: .\app\core\templates\auth\signin.html:23
+#: .\app\core\templates\core\base.html:79
+msgid "Sign In"
+msgstr "Se connecter"
+
+#: .\app\core\templates\auth\signup.html:7
+#: .\app\core\templates\auth\signup.html:29
+#: .\app\core\templates\core\base.html:80
+msgid "Sign Up"
+msgstr "S'inscrire"
+
+#: .\app\core\templates\core\base.html:28
+#: .\app\core\templates\core\home.html:16
+msgid "Offline"
+msgstr ""
+
+#: .\app\core\templates\core\base.html:31
+#: .\app\core\templates\core\home.html:19
+msgid "Online"
+msgstr ""
+
+#: .\app\core\templates\core\base.html:34
+msgid "Friends"
+msgstr "Amis"
+
+#: .\app\core\templates\core\base.html:56
+msgid "Accessibility"
+msgstr "Accessibilité"
+
+#: .\app\core\templates\core\base.html:59
+msgid "Increase Text Size"
+msgstr "Augmenter la taille du texte"
+
+#: .\app\core\templates\core\base.html:60
+msgid "Decrease Text Size"
+msgstr "Diminuer la taille du texte"
+
+#: .\app\core\templates\core\base.html:61
+msgid "Toggle High Contrast"
+msgstr "Activer le contraste élevé"
+
+#: .\app\core\templates\core\base.html:63
+msgid "Reset value"
+msgstr "Réinitialiser la valeur"
+
+#: .\app\core\templates\core\base.html:72
+#: .\app\core\templates\profile\myhome.html:6
+#, fuzzy
+#| msgid "Profile Image"
+msgid "My Profile"
+msgstr "Image de profil"
+
+#: .\app\core\templates\core\base.html:73
+#: .\app\core\templates\core\settings.html:9
+msgid "Settings"
+msgstr "Paramètres"
+
+#: .\app\core\templates\core\base.html:75
+msgid "Logout"
+msgstr "Se déconnecter"
+
+#: .\app\core\templates\core\home.html:9
+msgid "Welcome in Pong Game!"
+msgstr "Bienvenue dans le jeu Pong !"
+
+#: .\app\core\templates\core\home.html:10
+msgid "A simple Pong game made with Django and Bootstrap."
+msgstr "Un simple jeu de Pong réalisé avec Django et Bootstrap."
+
+#: .\app\core\templates\core\home.html:12
+msgid "Ready to Play?"
+msgstr "Prêt à jouer?"
+
+#: .\app\core\templates\core\settings.html:13
+msgid "Profile Image"
+msgstr "Image de profil"
+
+#: .\app\core\templates\core\settings.html:18
+msgid "Bio"
+msgstr "Biographie"
+
+#: .\app\core\templates\core\settings.html:21
+msgid "Submit"
+msgstr "Soumettre"
+
+#: .\app\core\templates\friends\home.html:6
+msgid "Friends and friendship request"
+msgstr "Amis et demande d'amitié"
+
+#: .\app\core\templates\friends\home.html:7
+msgid "Search Friends"
+msgstr "Rechercher des amis"
+
+#: .\app\core\templates\friends\home.html:10
+msgid "Friends:"
+msgstr "Amis:"
+
+#: .\app\core\templates\friends\home.html:22
+msgid "Remove Friend"
+msgstr "Supprimer un ami"
+
+#: .\app\core\templates\friends\home.html:28
+msgid "No Friends at the moment"
+msgstr "Aucun ami pour le moment"
+
+#: .\app\core\templates\friends\home.html:32
+msgid "Friend requests recived"
+msgstr "Demandes d'amis reçues"
+
+#: .\app\core\templates\friends\home.html:40
+msgid "Accept"
+msgstr "Accepter"
+
+#: .\app\core\templates\friends\home.html:41
+msgid "Refuse"
+msgstr "Refuser"
+
+#: .\app\core\templates\friends\home.html:47
+msgid "No friend request at the moment"
+msgstr "Aucune demande d'ami pour le moment"
+
+#: .\app\core\templates\friends\search.html:5
+msgid "User Search and Sending Friend Request"
+msgstr "Recherche d'utilisateurs et envoi de demande d'ami"
+
+#: .\app\core\templates\friends\search.html:10
+msgid "Search"
+msgstr "Recherche"
+
+#: .\app\core\templates\friends\search.html:16
+msgid "Result of the reserch"
+msgstr "Résultat de la recherche"
+
+#: .\app\core\templates\friends\search.html:24
+msgid "Send Request"
+msgstr "Envoyer une demande"
+
+#: .\app\core\templates\profile\home.html:19
+#: .\app\core\templates\profile\myhome.html:20
+msgid "Match History"
+msgstr "Historique des matchs"
+
+#: .\app\core\templates\profile\home.html:23
+#: .\app\core\templates\profile\myhome.html:24
+msgid "Date"
+msgstr "Date"
+
+#: .\app\core\templates\profile\home.html:24
+#: .\app\core\templates\profile\myhome.html:25
+msgid "Winner"
+msgstr "Gagnant"
+
+#: .\app\core\templates\profile\home.html:25
+#: .\app\core\templates\profile\myhome.html:26
+msgid "Loser"
+msgstr "Perdant"
+
+#: .\app\core\templates\profile\home.html:26
+#: .\app\core\templates\profile\myhome.html:27
+msgid "Score"
+msgstr "Score"
+
+#: .\app\core\templates\profile\myhome.html:36
+#: .\app\core\templates\profile\myhome.html:43
+msgid "Me"
+msgstr "Moi"
+
+#: .\app\ft_transcendence\settings.py:153
+msgid "English"
+msgstr "Anglais"
+
+#: .\app\ft_transcendence\settings.py:154
+msgid "Italian"
+msgstr "Italien"
+
+#: .\app\ft_transcendence\settings.py:155
+msgid "French"
+msgstr "Français"
+
+#: .\app\offline\templates\1vs1\home.html:11
+#: .\app\offline\templates\ai\home.html:11
+#: .\app\offline\templates\tournament\home.html:15
+msgid "Select the win point"
+msgstr "Sélectionnez le nombre de joueurs"
+
+#: .\app\offline\templates\1vs1\home.html:20
+#: .\app\offline\templates\tournament\play.html:11
+msgid ""
+"Player 1 Moves with Arrow Up and Arrow Down, Player 2 moves with W and S"
+msgstr ""
+"Le joueur 1 se déplace avec la flèche vers le haut et la flèche vers le bas, "
+"le joueur 2 se déplace avec W et S"
+
+#: .\app\offline\templates\1vs1\home.html:21
+#: .\app\offline\templates\ai\home.html:21
+#: .\app\offline\templates\tournament\play.html:12
+msgid "Start Game"
+msgstr "Démarrer jeu"
+
+#: .\app\offline\templates\ai\home.html:20
+msgid "You Moves with Arrow Up and Arrow Down"
+msgstr "Vous vous déplacez avec la flèche vers le haut et la flèche vers le bas"
+
+#: .\app\offline\templates\home.html:18
+#: .\app\offline\templates\tournament\home.html:9
+msgid "Tournament"
+msgstr "Tournoi"
+
+#: .\app\offline\templates\tournament\home.html:10
+msgid "Select the number of players"
+msgstr "Sélectionnez le nombre de joueurs"
+
+#: .\app\offline\templates\tournament\home.html:28
+msgid "Player Name"
+msgstr "Nom de joueur"
+
+#: .\app\offline\templates\tournament\home.html:33
+msgid "Start Tournament"
+msgstr "Commencer le tournoi"
+
+#: .\app\offline\templates\tournament\table.html:10
+msgid "Start Match"
+msgstr "Démarrer jeu"
+
+#: .\app\online\templates\online\game.html:7
+msgid "Share this code with your opponent:"
+msgstr "Partagez ce code avec votre adversaire :"
+
+#: .\app\online\templates\online\home.html:7
+msgid "Enter a room code to join a game"
+msgstr "Entrez un code de chambre pour rejoindre une partie"
+
+#: .\app\online\templates\online\home.html:13
+msgid "Enter"
+msgstr "Entrer"
+
+#: .\app\online\templates\online\home.html:17
+msgid "Or create a new game"
+msgstr "Ou créez un nouveau jeu"
+
+#: .\app\online\templates\online\home.html:21
+msgid "Create new Match"
+msgstr "Créer une nouvelle correspondance"

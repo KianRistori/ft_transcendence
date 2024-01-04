@@ -4,10 +4,10 @@
 *.pyc
 __pycache__
 db.sqlite3
-media
-
+app/media/profile_images
+app/staticfiles
 # Environments 
-.env 
+.env
 
 # Visual Studio Code # 
 .vscode/* 

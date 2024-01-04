@@ -6,11 +6,15 @@ const btnsStatus = document.getElementById("btnsStatus");
 const btnStatusPlay = document.getElementById("btnStatusPlay");
 const btnStatusPause = document.getElementById("btnStatusPause");
 const btnStatusRewind = document.getElementById("btnStatusRewind");
+const winPontButtons = document.querySelectorAll('#btnsWinPoint button');
+const winPontButton = document.getElementById("btnsWinPoint");
+const pointsTitle = document.getElementById("pointsTitle");
 
 const paddleWidth = 10;
 const paddleHeight = 80;
 const ballSize = 10;
 
+let winPoints;
 let paddle1Y = canvas.height / 2 - paddleHeight / 2;
 let paddle2Y = canvas.height / 2 - paddleHeight / 2;
 let paddleSpeed = 5;
@@ -26,7 +30,21 @@ let scorePlayer1 = 0;
 let scorePlayer2 = 0;
 
 let isPaused = false;
+let gameOver = false;
 let aiMovementInterval;
+
+winPontButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    winPontButtons.forEach(btn => {
+      btn.classList.remove("btn-secondary");
+      btn.classList.add("btn-outline-secondary")
+    });
+    winPoints = parseInt(this.getAttribute('data-btn'));
+    button.classList.toggle("btn-outline-secondary");
+    button.classList.toggle("btn-secondary");
+  });
+});
+
 
 function draw() {
   // Clear the canvas
@@ -35,7 +53,7 @@ function draw() {
   context.lineWidth = 2;
   context.strokeRect(0, 0, canvas.width, canvas.height);
 
-  if (!isPaused) {
+  if (!isPaused && !gameOver) {
     // Draw paddles
     context.fillStyle = "#ffffff";
     context.fillRect(20, paddle1Y, paddleWidth, paddleHeight);
@@ -71,10 +89,25 @@ function draw() {
     if (ballX - ballSize < 0) {
       // Player 2 scores
       scorePlayer2++;
+      if(scorePlayer2 == winPoints)
+      {
+        alert(`AI win! Game over.`);
+        gameOver = true;
+        resetGame();
+        window.location.href = '/local/ai';
+      }
       resetBall();
     } else if (ballX + ballSize > canvas.width) {
       // Player 1 scores
       scorePlayer1++;
+      if(scorePlayer1 == winPoints)
+      {
+        alert(`You win! Game over.`);
+        gameOver = true;
+        resetGame();
+        window.location.href = '/local/ai';
+
+      }
       resetBall();
     }
 
@@ -181,6 +214,8 @@ btnStart.addEventListener("click", function () {
   gameLoop();
   btnStatusPlay.classList.remove("btn", "btn-outline-secondary");
   btnStatusPlay.classList.add("btn", "btn-secondary");
+  winPontButton.classList.add("d-none");
+  pointsTitle.classList.add("d-none");
 });
 
 btnStatusRewind.addEventListener("click", function () {
