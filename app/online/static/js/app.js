@@ -1,7 +1,7 @@
 var roomCode = document.getElementById("game_board").getAttribute("room_code");
 var h1HeadingVS = document.getElementById("headingVS");
 
-var connectionString = 'ws://' + window.location.host + '/ws/play/' + roomCode + '/';
+var connectionString = 'wss://' + window.location.host + '/ws/play/' + roomCode + '/';
 var gameSocket = new WebSocket(connectionString);
 
 const canvas = document.getElementById("pongCanvas");
@@ -204,7 +204,7 @@ window.addEventListener("keyup", function (event) {
 
 // Game loop
 function gameLoop() {
-  setTimeout(10000)
+  // setTimeout(10000)
   canvas.style.display = 'block';
   gameChat.classList.remove('d-none');
   gameChat.classList.add('d-flex');

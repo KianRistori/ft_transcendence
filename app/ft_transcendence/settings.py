@@ -47,13 +47,14 @@ CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'channels',
+    # 'channels',
     'core',
     'offline',
     'online',
@@ -62,9 +63,12 @@ INSTALLED_APPS = [
 ASGI_APPLICATION = 'ft_transcendence.asgi.application'
 
 CHANNEL_LAYERS = {
-    'default':{
-        'BACKEND':'channels.layers.InMemoryChannelLayer'
-    }
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],  # Modifica questo host in base al nome del tuo servizio Redis nel docker-compose.yml
+        },
+    },
 }
 
 MIDDLEWARE = [
