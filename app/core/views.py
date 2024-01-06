@@ -138,7 +138,7 @@ def settingsHome(request):
         if request.FILES.get('image') != None:
             image = request.FILES.get('image')
             bio = request.POST['bio']
-
+            
             user_profile.profileImg = image
             user_profile.bio = bio
             user_profile.save()
