@@ -47,7 +47,7 @@ CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
+    # 'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,13 +60,14 @@ INSTALLED_APPS = [
     'online',
 ]
 
+
 ASGI_APPLICATION = 'ft_transcendence.asgi.application'
 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("redis", 6379)],  # Modifica questo host in base al nome del tuo servizio Redis nel docker-compose.yml
+            "hosts": [("redis", 6379)],
         },
     },
 }
@@ -101,7 +102,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'ft_transcendence.wsgi.application'
+WSGI_APPLICATION = 'ft_transcendence.wsgi.application'
 
 
 # Database
@@ -166,7 +167,6 @@ LANGUAGES = (
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

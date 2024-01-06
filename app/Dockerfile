@@ -1,20 +1,18 @@
-# pull official base image
-FROM python:latest
+# Usa una versione specifica di Python per garantire la stabilità
+FROM python:3.9
 
-# set work directory
+# Imposta la directory di lavoro
 WORKDIR /usr/src/app
 
-# set environment variables
+# Imposta le variabili d'ambiente
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install system dependencies
-# RUN apt-get update && apt-get install -y netcat-traditional
-
-# install dependencies
-RUN pip install --upgrade pip
+# Installa le dipendenze
 COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# copy project
+# Copia il progetto nella directory di lavoro
 COPY . .
+
+RUN mkdir staticfiles
