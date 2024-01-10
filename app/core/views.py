@@ -8,6 +8,8 @@ from django.contrib import messages
 from .models import Profile, Friendship, FriendRequest, MatchHistory
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.contrib.sessions.models import Session
+from django.utils import timezone
 
 def home(request):
     return render(request, 'core/home.html')
@@ -170,9 +172,23 @@ def search_and_send_friend_request(request):
 
 @login_required(login_url='signin')
 def view_friends(request):
-    friends = Friendship.objects.filter(user1=request.user) | Friendship.objects.filter(user2=request.user)
-
+    friends = Friendship.objects.filter(Q(user1=request.user) | Q(user2=request.user))
     received_requests = FriendRequest.objects.filter(to_user=request.user, accepted=False)
+
+    sessions = Session.objects.filter(expire_date__gte=timezone.now())
+    # Ottieni gli ID degli utenti dalle sessioni
+    online_user_ids = [int(session.get_decoded().get('_auth_user_id')) for session in sessions]
+
+    # Creare una lista di amici con un indicatore online/offline
+    friends_with_online_status = []
+    for friend in friends:
+        if friend.user1 == request.user:
+            friend_user = friend.user2
+        else:
+            friend_user = friend.user1
+
+        online_status = friend_user.id in online_user_ids
+        friends_with_online_status.append({'friend': friend_user, 'online': online_status})
 
     if request.method == 'POST':
         friend_id = request.POST.get('friend_id', None)
@@ -193,7 +209,7 @@ def view_friends(request):
 
             return redirect('/friends/')
 
-    return render(request, 'friends/home.html', {'friends': friends, 'received_requests': received_requests})
+    return render(request, 'friends/home.html', {'friends': friends_with_online_status, 'received_requests': received_requests})
 
 @login_required(login_url='signin')
 def profile_page(request, id_user):

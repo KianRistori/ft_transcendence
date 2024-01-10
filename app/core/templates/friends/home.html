@@ -7,25 +7,26 @@
         <a type="button" href="/friends/search/" class="btn btn-outline-secondary">{% trans 'Search Friends' %}</a>
     </div>
     {% if friends %}
-      <h3>{% trans 'Friends:' %}</h3>
-      <ul class="list-group">
-        {% for friend in friends %}
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            {% if friend.user1 == user %}
-            <a  href="{% url 'profile_page' id_user=friend.user2.id %}">{{ friend.user2.username }}</a>
-            {% else %}
-            <a  href="{% url 'profile_page' id_user=friend.user1.id %}">{{ friend.user1.username }}</a>
-            {% endif %}
-            <form method="post" action="{% url 'view_friends' %}">
-              {% csrf_token %}
-              <input type="hidden" name="friend_id" value="{{ friend.user2.id }}">
-              <button type="submit" name="action" value="remove" class="btn btn-danger btn-sm float-right">{% trans 'Remove Friend' %}</button>
-            </form>
-          </li>
-        {% endfor %}
-      </ul>
+    <h3>{% trans 'Friends:' %}</h3>
+    <ul class="list-group">
+      {% for friend_data in friends %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'profile_page' id_user=friend_data.friend.id %}">{{ friend_data.friend.username }}</a>
+          {% if friend_data.online %}
+            <span>(Online)</span>
+          {% else %}
+            <span>(Offline)</span>
+          {% endif %}
+          <form method="post" action="{% url 'view_friends' %}">
+            {% csrf_token %}
+            <input type="hidden" name="friend_id" value="{{ friend_data.friend.id }}">
+            <button type="submit" name="action" value="remove" class="btn btn-danger btn-sm float-right">{% trans 'Remove Friend' %}</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
     {% else %}
-      <p>{% trans 'No Friends at the moment' %}</p>
+        <p>{% trans 'No Friends at the moment' %}</p>
     {% endif %}
 
     {% if received_requests %}
