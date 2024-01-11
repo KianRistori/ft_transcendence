@@ -28,8 +28,6 @@ let scorePlayer2 = 0;
 
 let currentPlayer;
 
-let isPaused = false;
-
 let form = document.getElementById('form')
         form.addEventListener('submit', (e)=> {
             e.preventDefault()
@@ -40,7 +38,10 @@ let form = document.getElementById('form')
             }))
             form.reset()
         })
+
 let host = false;
+
+let lastBallUpdate = Date.now();
 
 function draw() {
   // Clear the canvas
@@ -49,28 +50,31 @@ function draw() {
   context.lineWidth = 2;
   context.strokeRect(0, 0, canvas.width, canvas.height);
 
-  if (!isPaused) {
-    // Draw paddles
-    context.fillStyle = "#ffffff";
-    context.fillRect(20, paddle1Y, paddleWidth, paddleHeight);
-    context.fillRect(canvas.width - paddleWidth - 20, paddle2Y, paddleWidth, paddleHeight);
+  // Draw paddles
+  context.fillStyle = "#ffffff";
+  context.fillRect(20, paddle1Y, paddleWidth, paddleHeight);
+  context.fillRect(canvas.width - paddleWidth - 20, paddle2Y, paddleWidth, paddleHeight);
 
-    // Draw the ball
-    context.beginPath();
-    context.arc(ballX, ballY, ballSize, 0, Math.PI * 2);
-    context.fillStyle = "#ffffff";
-    context.fill();
-    context.closePath();
+  // Draw the ball
+  context.beginPath();
+  context.arc(ballX, ballY, ballSize, 0, Math.PI * 2);
+  context.fillStyle = "#ffffff";
+  context.fill();
+  context.closePath();
 
     // Move the ball
     if (host) {
       ballX += ballSpeedX;
       ballY += ballSpeedY;
-      gameSocket.send(JSON.stringify({
-        "event": "BALL_MOVE",
-        "ballX": ballX,
-        "ballY": ballY,
-      }));
+      const currentTime = Date.now();
+      if (currentTime - lastBallUpdate >= 10) {  // Invia ogni 100 millisecondi
+        gameSocket.send(JSON.stringify({
+          "event": "BALL_MOVE",
+          "ballX": ballX,
+          "ballY": ballY,
+        }));
+        lastBallUpdate = currentTime;
+      }
     }
 
     // Bounce off the top and bottom edges
@@ -129,16 +133,10 @@ function draw() {
 
     // Move the paddles
     movePaddles();
-  }
-
-  // Display the score
-  context.font = "20px Arial";
-  context.fillText(scorePlayer1 + " - " + scorePlayer2, canvas.width / 2 - 10, 30);
-
-  // Display pause message
-  if (isPaused) {
-    context.fillText("Paused", canvas.width / 2 - 30, canvas.height / 2);
-  }
+    
+    // Display the score
+    context.font = "20px Arial";
+    context.fillText(scorePlayer1 + " - " + scorePlayer2, canvas.width / 2 - 10, 30);
 }
 
 function movePaddles() {
@@ -254,7 +252,6 @@ function connect() {
       if (data.type == 'chat_message')
       {
         let messages = document.getElementById('messages')
-        console.log(currentPlayer)
         if (currentPlayer.localeCompare(data.user))
         {
           messages.insertAdjacentHTML('beforeend',
