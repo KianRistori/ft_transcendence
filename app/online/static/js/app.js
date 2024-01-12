@@ -62,21 +62,6 @@ function draw() {
   context.fill();
   context.closePath();
 
-    // Move the ball
-    if (host) {
-      ballX += ballSpeedX;
-      ballY += ballSpeedY;
-      const currentTime = Date.now();
-      if (currentTime - lastBallUpdate >= 10) {  // Invia ogni 100 millisecondi
-        gameSocket.send(JSON.stringify({
-          "event": "BALL_MOVE",
-          "ballX": ballX,
-          "ballY": ballY,
-        }));
-        lastBallUpdate = currentTime;
-      }
-    }
-
     // Bounce off the top and bottom edges
     if (ballY + ballSize > canvas.height || ballY - ballSize < 0) {
       ballSpeedY = -ballSpeedY;
@@ -137,6 +122,16 @@ function draw() {
     // Display the score
     context.font = "20px Arial";
     context.fillText(scorePlayer1 + " - " + scorePlayer2, canvas.width / 2 - 10, 30);
+
+    if (host) {
+      ballX += ballSpeedX;
+      ballY += ballSpeedY;
+      gameSocket.send(JSON.stringify({
+          "event": "BALL_MOVE",
+          "ballX": ballX,
+          "ballY": ballY,
+        }));
+    }
 }
 
 function movePaddles() {
